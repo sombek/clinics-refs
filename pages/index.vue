@@ -1,14 +1,13 @@
 <template>
     <div class="container">
         <div>
-            <h1 class="title is-1">
-                مرجع العيادات
-            </h1>
+            <h3 class="title is-1">
+                مرجع العيادات النفسية
+            </h3>
 
             <div style="padding: 10px">
 
-                <b-table :data="data">
-
+                <b-table :data="dataTable">
 
                     <b-table-column field="city" label="المدينة" centered v-slot="props">
                         <span class="tag is-success">
@@ -16,12 +15,16 @@
                         </span>
                     </b-table-column>
 
-                    <b-table-column field="first_name" label="🩺 اسم الطبيب " centered v-slot="props">
-                        {{props.row.first_name}}
+                    <b-table-column field="average_price" label="متوسط سعر الجلسة" centered v-slot="props">
+                        {{props.row.average_price}}
                     </b-table-column>
 
-                    <b-table-column field="first_name" label="اسم العيادة" centered v-slot="props">
-                        {{props.row.first_name}}
+                    <b-table-column field="doctor_name" label="🩺 اسم الطبيب " centered v-slot="props">
+                        {{props.row.doctor_name}}
+                    </b-table-column>
+
+                    <b-table-column field="clinic_name" label="اسم العيادة" centered v-slot="props">
+                        {{props.row.clinic_name}}
                     </b-table-column>
 
                 </b-table>
@@ -32,68 +35,29 @@
 </template>
 
 <script>
+    import request from 'request'
+    import csv from 'csvtojson'
+
+
     export default {
+        /*
+
+        clinic_name
+        doctor_name
+        average_price
+        city
+        location_link
+        notes
+
+         */
+        async asyncData() {
+            const csvRow = await csv()
+                .fromStream(request.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSdpFtefmBvKx9LBo1sW_uNfTU7diPOwC8cF50aGPwYXy4efxidmDNqN3sgVTd9PAFwB_PWH1pojsot/pub?output=csv'))
+            return {dataTable: csvRow}
+        },
         data() {
             return {
-                data: [
-                    {
-                        'id': 1,
-                        'first_name': 'هلاا',
-                        'city': 'اثنين',
-                        'date': '2016-10-15 13:43:27',
-                        'gender': 'Male'
-                    },
-                    {
-                        'id': 2,
-                        'first_name': 'ثلاثه',
-                        'city': 'اربعه',
-                        'date': '2016-12-15 06:00:53',
-                        'gender': 'Male'
-                    },
-                    {
-                        'id': 3,
-                        'first_name': 'عشرين',
-                        'city': 'خمسين',
-                        'date': '2016-04-26 06:26:28',
-                        'gender': 'Female'
-                    },
-                    {
-                        'id': 4,
-                        'first_name': 'Clarence',
-                        'city': 'Flores',
-                        'date': '2016-04-10 10:28:46',
-                        'gender': 'Male'
-                    },
-                    {
-                        'id': 5,
-                        'first_name': 'Anne',
-                        'city': 'Lee',
-                        'date': '2016-12-06 14:38:38',
-                        'gender': 'Female'
-                    }
-                ],
-                columns: [
-                    {
-                        field: 'date',
-                        label: 'Date',
-                        centered: true
-                    },
-                    {
-                        field: 'gender',
-                        label: 'اسم الدكتور (إن وجد)',
-                        centered: true
-                    },
-                    {
-                        field: 'city',
-                        label: 'المدينة',
-                        centered: true
-                    },
-                    {
-                        field: 'first_name',
-                        label: 'اسم العيادة',
-                        centered: true
-                    }
-                ]
+                dataTable: [],
             }
         }
     }
@@ -131,5 +95,9 @@
 
     * {
         font-family: -apple-system, system-ui, BlinkMacSystemFont !important;
+    }
+
+    td {
+        flex-direction: row-reverse;
     }
 </style>
