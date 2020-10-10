@@ -19,7 +19,7 @@
                           type="is-info is-light"
                           icon-left="twitter"
                           href="https://twitter.com/abdullahjsx"
-                          @click="trackUsage('website_interactions','author_twitter_click','footer_button','clicked')"
+                          @click="trackUsage('website_interactions','author_twitter_click','footer_button')"
                           target="_blank">
                     @abdullahjsx
                 </b-button>
@@ -48,8 +48,8 @@
             }
         },
         methods: {
-            trackUsage(category, action, label, value) {
-                this.$ga.event(category, action, label, value)
+            trackUsage(category, action, label) {
+                this.$ga.event(category, action, label)
             }
         },
     }

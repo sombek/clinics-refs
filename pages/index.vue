@@ -7,8 +7,8 @@
                     <b-button type="button" class="btn btn-primary btn-sm"
                             tag="a"
                             target="_blank"
-                            :href="'https://twitter.com/intent/tweet?url=http%3A%2F%2Fclinics-ref.com%2F&text='"
-                            @click="trackUsage('website_interactions','share_twitter','header_button','clicked')">
+                            :href="'https://twitter.com/intent/tweet?url=https%3A%2F%2Fclinics-ref.com%2F&text='"
+                            @click="trackUsage('website_interactions','share_twitter','header_button')">
                         <i class="mdi mdi-twitter"></i>
                         المشاركة عبر
                     </b-button>
@@ -92,7 +92,7 @@
                                       size="is-small"
                                       type="is-warning is-light"
                                       icon-left="web"
-                                      @click="trackUsage('row_interactions','website_click',props.row.clinic_name,props.row.website)"
+                                      @click="trackUsage('row_interactions','website_click '+props.row.clinic_name, props.row.website)"
                                       :disabled="!!!props.row.website"
                                       :href="props.row.website"
                                       target="_blank">
@@ -106,7 +106,7 @@
                                       type="is-primary is-light"
                                       icon-left="map"
                                       :href="props.row.location_link"
-                                      @click="trackUsage('row_interactions','location_link_click',props.row.clinic_name,props.row.location_link)"
+                                      @click="trackUsage('row_interactions','location_link_click '+props.row.clinic_name, props.row.location_link)"
                                       :disabled="!!!props.row.location_link"
                                       target="_blank">
                             </b-button>
@@ -119,7 +119,7 @@
                                       type="is-info is-light"
                                       icon-left="twitter"
                                       :disabled="!!!props.row.social_media"
-                                      @click="trackUsage('row_interactions','twitter_click',props.row.clinic_name,props.row.social_media)"
+                                      @click="trackUsage('row_interactions','twitter_click '+props.row.clinic_name, props.row.social_media)"
                                       :href="props.row.social_media"
                                       target="_blank">
                             </b-button>
@@ -181,8 +181,8 @@
             this.shownImage = images[Math.floor(Math.random() * images.length)];
         },
         methods: {
-            trackUsage(category, action, label, value) {
-                this.$ga.event(category, action, label, value)
+            trackUsage(category, action, label) {
+                this.$ga.event(category, action, label)
             }
         },
         async asyncData() {
@@ -195,7 +195,7 @@
         },
         watch: {
             city: function(val) {
-                this.trackUsage('cityFilter', 'changeCity', 'city', val)
+                this.trackUsage('cityFilter', 'changeCity', val)
                 if (val === 'default')
                     return this.dataTable = this.rawData
                 this.dataTable = this.rawData.filter(c => c.city.includes(val))
