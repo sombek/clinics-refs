@@ -5,7 +5,11 @@ export default {
         meta: [
             {charset: 'utf-8'},
             {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-            {hid: 'description', name: 'description', content: 'مرجع العيادات النفسية السعودية هو موقع غير ربحي و يعتمد على تجارب الناس و ترشيحاتهم للعيادات النفسية و اهم اهدافه هي رفع الوعي بالصحة النفسية'}
+            {hid: 'description', name: 'description', content: 'مرجع العيادات النفسية السعودية هو موقع غير ربحي و يعتمد على تجارب الناس و ترشيحاتهم للعيادات النفسية و اهم اهدافه هي رفع الوعي بالصحة النفسية'},
+            {hid: 'og:title', name: 'og:title', content: 'مرجع العيادات النفسية السعودية'},
+            {hid: 'og:url', name: 'og:url', content: 'https://clinics-ref.com/'},
+            {hid: 'og:description', name: 'og:description', content: 'مرجع العيادات النفسية السعودية'},
+            {hid: 'og:image', name: 'og:image', content: 'https://clinics-ref.com/ogImage.png'}
         ],
         link: [
             {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
