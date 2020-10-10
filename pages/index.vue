@@ -2,6 +2,14 @@
     <div>
         <div class="container">
             <div>
+                <div style="margin-bottom: 30px">
+                    <h6 class="websiteTitle">clinics-ref.com</h6>
+                    <button type="button" class="btn btn-primary btn-sm">
+                        <i class="mdi mdi-twitter"></i>
+                        المشاركة عبر
+                    </button>
+                </div>
+
                 <img :src="shownImage" width="200px" alt="">
 
                 <h3 class="title">
@@ -153,7 +161,7 @@
     export default {
         components: {appFooter},
         created() {
-            let images= [
+            let images = [
                 'https://i.pinimg.com/originals/51/85/f9/5185f95f8305671494ca40154157b2ab.gif',
                 'https://media.giphy.com/media/fwDYfOHIvFClrpPh63/giphy.gif',
             ]
@@ -185,6 +193,13 @@
 </script>
 
 <style>
+    .websiteTitle {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 10pt;
+        margin-bottom: 5px;
+    }
+
     .container {
         padding: 16px;
         min-height: 100vh;
@@ -239,5 +254,72 @@
             text-align: right;
         }
     }
+
+
+    .btn-primary {
+        box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08)
+    }
+
+    .btn-primary, .btn-primary:hover {
+        color: #fff;
+        background-color: #5e72e4;
+        border-color: #5e72e4
+    }
+
+    .btn-primary.focus, .btn-primary:focus {
+        box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08), 0 0 0 0 rgba(94, 114, 228, .5)
+    }
+
+    .btn-primary.disabled, .btn-primary:disabled {
+        color: #fff;
+        background-color: #5e72e4;
+        border-color: #5e72e4
+    }
+
+    .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
+        color: #fff;
+        background-color: #324cdd;
+        border-color: #5e72e4
+    }
+
+    .btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show > .btn-primary.dropdown-toggle:focus {
+        box-shadow: none, 0 0 0 0 rgba(94, 114, 228, .5)
+    }
+
+
+    .btn {
+        display: inline-block;
+        font-weight: 600;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        line-height: 1.5;
+        border-radius: .25rem;
+        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
+    }
+    .btn-sm {
+        padding: .25rem .5rem;
+        font-size: 8pt;
+        line-height: 1.5;
+        border-radius: .25rem
+    }
+
+    .btn {
+        position: relative;
+        text-transform: uppercase;
+        transition: all .15s ease;
+        will-change: transform;
+        letter-spacing: .025em;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        box-shadow: 0 7px 14px rgba(50,50,93,.1),0 3px 6px rgba(0,0,0,.08);
+        transform: translateY(-1px)
+    }
+
+
 
 </style>

@@ -5,7 +5,11 @@ export default {
         meta: [
             {charset: 'utf-8'},
             {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-            {hid: 'description', name: 'description', content: 'مرجع العيادات النفسية السعودية هو موقع غير ربحي و يعتمد على تجارب الناس و ترشيحاتهم للعيادات النفسية و اهم اهدافه هي رفع الوعي بالصحة النفسية'},
+            {
+                hid: 'description',
+                name: 'description',
+                content: 'مرجع العيادات النفسية السعودية هو موقع غير ربحي و يعتمد على تجارب الناس و ترشيحاتهم للعيادات النفسية و اهم اهدافه هي رفع الوعي بالصحة النفسية'
+            },
             {hid: 'og:title', name: 'og:title', content: 'مرجع العيادات النفسية السعودية'},
             {hid: 'og:url', name: 'og:url', content: 'https://clinics-ref.com/'},
             {hid: 'og:description', name: 'og:description', content: 'مرجع العيادات النفسية السعودية'},
@@ -20,7 +24,9 @@ export default {
     css: [],
 
     // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-    plugins: [],
+    plugins: [
+        {src: '~plugins/ga.js', mode: 'client'}
+    ],
 
     // Auto import components (https://go.nuxtjs.dev/config-components)
     components: true,
