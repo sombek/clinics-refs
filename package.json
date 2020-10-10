@@ -19,5 +19,7 @@
     "request": "^2.88.2",
     "tls": "0.0.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@nuxtjs/google-analytics": "^2.4.0"
+  }
 }

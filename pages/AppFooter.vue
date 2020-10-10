@@ -19,6 +19,7 @@
                           type="is-info is-light"
                           icon-left="twitter"
                           href="https://twitter.com/abdullahjsx"
+                          @click="trackUsage('website_interactions','author_twitter_click','footer_button','clicked')"
                           target="_blank">
                     @abdullahjsx
                 </b-button>
@@ -45,7 +46,12 @@
             return {
                 year: new Date().getFullYear()
             }
-        }
+        },
+        methods: {
+            trackUsage(category, action, label, value) {
+                this.$ga.event(category, action, label, value)
+            }
+        },
     }
 </script>
 <style>

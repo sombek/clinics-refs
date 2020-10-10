@@ -4,10 +4,14 @@
             <div>
                 <div style="margin-bottom: 30px">
                     <h6 class="websiteTitle">clinics-ref.com</h6>
-                    <button type="button" class="btn btn-primary btn-sm">
+                    <b-button type="button" class="btn btn-primary btn-sm"
+                            tag="a"
+                            target="_blank"
+                            :href="'https://twitter.com/intent/tweet?url=http%3A%2F%2Fclinics-ref.com%2F&text='"
+                            @click="trackUsage('website_interactions','share_twitter','header_button','clicked')">
                         <i class="mdi mdi-twitter"></i>
                         المشاركة عبر
-                    </button>
+                    </b-button>
                 </div>
 
                 <img :src="shownImage" width="200px" alt="">
@@ -30,50 +34,55 @@
                    target="_blank">
                     #اليوم_العالمي_للصحة_النفسية_2020
                 </a>
+
                 <br>
 
                 <div style="padding: 10px">
 
-                    <div>
-                        <h4 style="direction: rtl">
-                            يرجى إختيار المدينة:
-                        </h4>
+                    <div class="box" style="width: 321px; margin: 30px auto;">
+                        <div>
+                            <h3 style="direction: rtl;font-weight: bold;margin-bottom: 10px">
+                                يرجى إختيار المدينة:
+                            </h3>
 
 
-                        <div style="display: flex;justify-content: center;    flex-flow: wrap-reverse;">
-                            <div class="field">
-                                <b-radio v-model="city"
-                                         native-value="المدينة">
-                                    المدينة
-                                </b-radio>
-                            </div>
-                            <div class="field">
-                                <b-radio v-model="city"
-                                         native-value="جدة">
-                                    جدة
-                                </b-radio>
-                            </div>
-                            <br>
-                            <div class="field">
-                                <b-radio v-model="city"
-                                         native-value="الرياض">
-                                    الرياض
-                                </b-radio>
-                            </div>
-                            <div class="field">
-                                <b-radio v-model="city"
-                                         native-value="الدمام">
-                                    الدمام
-                                </b-radio>
-                            </div>
-                            <div class="field">
-                                <b-radio v-model="city"
-                                         native-value="default">
-                                    الكل
-                                </b-radio>
+                            <div style="display: flex;justify-content: center;    flex-flow: wrap-reverse;">
+                                <div class="field">
+                                    <b-radio v-model="city"
+
+                                             native-value="المدينة">
+                                        المدينة
+                                    </b-radio>
+                                </div>
+                                <div class="field">
+                                    <b-radio v-model="city"
+                                             native-value="جدة">
+                                        جدة
+                                    </b-radio>
+                                </div>
+                                <br>
+                                <div class="field">
+                                    <b-radio v-model="city"
+                                             native-value="الرياض">
+                                        الرياض
+                                    </b-radio>
+                                </div>
+                                <div class="field">
+                                    <b-radio v-model="city"
+                                             native-value="الدمام">
+                                        الدمام
+                                    </b-radio>
+                                </div>
+                                <div class="field">
+                                    <b-radio v-model="city"
+                                             native-value="default">
+                                        الكل
+                                    </b-radio>
+                                </div>
                             </div>
                         </div>
                     </div>
+
 
                     <b-table :data="dataTable"
                              bordered detailed narrowed>
@@ -83,6 +92,7 @@
                                       size="is-small"
                                       type="is-warning is-light"
                                       icon-left="web"
+                                      @click="trackUsage('row_interactions','website_click',props.row.clinic_name,props.row.website)"
                                       :disabled="!!!props.row.website"
                                       :href="props.row.website"
                                       target="_blank">
@@ -96,6 +106,7 @@
                                       type="is-primary is-light"
                                       icon-left="map"
                                       :href="props.row.location_link"
+                                      @click="trackUsage('row_interactions','location_link_click',props.row.clinic_name,props.row.location_link)"
                                       :disabled="!!!props.row.location_link"
                                       target="_blank">
                             </b-button>
@@ -108,6 +119,7 @@
                                       type="is-info is-light"
                                       icon-left="twitter"
                                       :disabled="!!!props.row.social_media"
+                                      @click="trackUsage('row_interactions','twitter_click',props.row.clinic_name,props.row.social_media)"
                                       :href="props.row.social_media"
                                       target="_blank">
                             </b-button>
@@ -161,11 +173,17 @@
     export default {
         components: {appFooter},
         created() {
+            console.log(this.$ga)
             let images = [
                 'https://i.pinimg.com/originals/51/85/f9/5185f95f8305671494ca40154157b2ab.gif',
                 'https://media.giphy.com/media/fwDYfOHIvFClrpPh63/giphy.gif',
             ]
             this.shownImage = images[Math.floor(Math.random() * images.length)];
+        },
+        methods: {
+            trackUsage(category, action, label, value) {
+                this.$ga.event(category, action, label, value)
+            }
         },
         async asyncData() {
             const csvRow = await csv()
@@ -176,7 +194,8 @@
             }
         },
         watch: {
-            city: function(val, oldVal) {
+            city: function(val) {
+                this.trackUsage('cityFilter', 'changeCity', 'city', val)
                 if (val === 'default')
                     return this.dataTable = this.rawData
                 this.dataTable = this.rawData.filter(c => c.city.includes(val))
@@ -297,8 +316,9 @@
         border: 1px solid transparent;
         line-height: 1.5;
         border-radius: .25rem;
-        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
+        transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out
     }
+
     .btn-sm {
         padding: .25rem .5rem;
         font-size: 8pt;
@@ -316,10 +336,13 @@
     }
 
     .btn:hover {
-        box-shadow: 0 7px 14px rgba(50,50,93,.1),0 3px 6px rgba(0,0,0,.08);
+        box-shadow: 0 7px 14px rgba(50, 50, 93, .1), 0 3px 6px rgba(0, 0, 0, .08);
         transform: translateY(-1px)
     }
 
+    .b-radio.radio .control-label {
+        padding-right: 4px;
+    }
 
 
 </style>
