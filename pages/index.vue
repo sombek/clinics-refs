@@ -166,7 +166,6 @@
 </template>
 
 <script>
-    import request from 'request'
     import csv from 'csvtojson'
     import appFooter from './AppFooter'
 
@@ -186,12 +185,23 @@
             }
         },
         async asyncData() {
-            const csvRow = await csv()
-                .fromStream(request.get('https://docs.google.com/spreadsheets/d/e/2PACX-1vSdpFtefmBvKx9LBo1sW_uNfTU7diPOwC8cF50aGPwYXy4efxidmDNqN3sgVTd9PAFwB_PWH1pojsot/pub?output=csv'))
-            return {
-                dataTable: csvRow,
-                rawData: csvRow
+            const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSdpFtefmBvKx9LBo1sW_uNfTU7diPOwC8cF50aGPwYXy4efxidmDNqN3sgVTd9PAFwB_PWH1pojsot/pub?output=csv';
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const csvData = await response.text();
+                const csvRow = await csv().fromString(csvData);
+                console.log(csvRow);
+                return {
+                    dataTable: csvRow,
+                    rawData: csvRow
+                }
+            } catch (error) {
+                console.error('Error fetching or processing CSV:', error);
             }
+
         },
         watch: {
             city: function(val) {
